@@ -108,6 +108,64 @@ c.Label.String = 'Current Density (Amps per Area)';
 xlabel('x');
 ylabel('y');
 
+%%%%% Part 2 - B %%%%%
+f_p2b = figure();
+hold on;
+V0 = 1;
+sigma_conduct = 1;
+sigma_insulate = 1E-2;
+Wb = 20;
+Lb = 10;
+nx = 75;
+ny = 50;
+range = 20:5:100;
+I = [];
+for x = range
+    I = [I sweep(x, ny, V0, sigma_conduct, sigma_insulate, Wb, Lb)];
+end
+plot(range, I);
+ylabel('Total Current (A)');
+xlabel('Width mesh size');
+
+%%%%% Part 2 - C %%%%%
+f_p2c = figure();
+hold on;
+V0 = 1;
+sigma_conduct = 1;
+sigma_insulate = 1E-2;
+Wb = 20;
+Lb = 10;
+nx = 75;
+ny = 50;
+range = 0:1:50;
+I = [];
+for W = range
+    I = [I sweep(nx, ny, V0, sigma_conduct, sigma_insulate, W, Lb)];
+end
+plot(range, I);
+ylabel('Total Current (A)');
+xlabel('Box width');
+
+%%%%% Part 2 - D %%%%%
+f_p2d = figure();
+hold on;
+V0 = 1;
+sigma_conduct = 1;
+sigma_insulate = 1E-2;
+Wb = 20;
+Lb = 10;
+nx = 75;
+ny = 50;
+range = logspace(-5,0, 50);
+I = [];
+for sigma = range
+    I = [I sweep(nx, ny, V0, sigma_conduct, sigma, Wb, Lb)];
+end
+plot(range, I);
+ylabel('Total Current (A)');
+xlabel('Box Conduction (Mho)');
+
+
 %generateReport(f_p1a_numeric, f_p1b_numeric, f_p1b_analytic);
 close(f_p1a_numeric);
 close(f_p1b_numeric);
@@ -115,4 +173,7 @@ close(f_p1b_analytic);
 close(f_p2a_cMap);
 close(f_p2a_V);
 close(f_p2a_E);
-%close(f_p2a_J);
+close(f_p2a_J);
+close(f_p2b);
+close(f_p2c);
+%close(f_p2d);
