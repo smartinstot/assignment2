@@ -166,7 +166,7 @@ ylabel('Total Current (A)');
 xlabel('Box Conduction (Mho)');
 
 
-%generateReport(f_p1a_numeric, f_p1b_numeric, f_p1b_analytic);
+generateReport(f_p1a_numeric, f_p1b_numeric, f_p1b_analytic, f_p2a_cMap, f_p2a_V, f_p2a_E, f_p2a_J, f_p2b, f_p2c, f_p2d);
 close(f_p1a_numeric);
 close(f_p1b_numeric);
 close(f_p1b_analytic);
@@ -176,4 +176,4 @@ close(f_p2a_E);
 close(f_p2a_J);
 close(f_p2b);
 close(f_p2c);
-%close(f_p2d);
+close(f_p2d);
