@@ -2,8 +2,11 @@
 %                           By David Bascelli                             %
 %                           Febuary 24th, 2019                            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 addpath code;
+clear;
 global C;
+clear;
 
 % Physical constants
 C.q_0 = 1.60217653e-19;             % electron charge
@@ -16,54 +19,15 @@ C.mu_0 = 1.2566370614e-6;           % vacuum permeability
 C.c = 299792458; % speed of light
 
 % Global constants
-C.nx = 75;
-C.ny = 50;
-C.dx = 1;
-C.dy = 1;
+nx = 75;
+ny = 50;
+V0 = 1; 
 
-G = sparse(nx*ny, ny*nx);
-alpha = (C.hb^2) / (2 * C.m_0);
-
-
-for i=1:nx
-    for j=1:ny
-        n = map(i,j);
-        nxm = map(i-1,j);
-        nxp = map(i+1,j);
-        nym = map(i,j-1);
-        nyp = map(i,j+1);
-        
-        if (i == 1 || i == nx)
-            G(n,n) = 1 / dx^2;
-        elseif (j == 1 || j == ny)
-            G(n,n) = 1 / dy^2;
-        else
-            G(n,n) = -2 / dx^2 + -2 / dy^2;
-            G(n,nxm) = 1 / dx^2;
-            G(n,nxp) = 1 / dx^2;
-            G(n,nym) = 1 / dy^2;
-            G(n,nyp) = 1 / dy^2;
-        end
-    end
-end
-
-%spy(G);
-[E,D] = eigs(G,9,'SM');
-
-E_plot = zeros(nx,ny,9);
-for n=1:9
-    for i=1:nx
-        for j=1:ny
-            E_plot(i,j,n) = E(map(i,j),n);
-        end
-    end
-end
+V = numeric(nx, ny, ones(nx, ny), V0, V0, 0, 0);
 
 f = figure();
 hold on;
-for n=1:9
-    subplot(3,3,n);
-    surf(E_plot(:,:,n),'EdgeColor','none','LineStyle','none','FaceLighting','phong');
-end
+surf(V,'EdgeColor','none','LineStyle','none','FaceLighting','phong');
+%plot(E_plot(:,n));
 
-generateReport(f);
+%generateReport(f);

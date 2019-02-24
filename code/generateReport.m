@@ -5,6 +5,7 @@ import mlreportgen.report.*
 import mlreportgen.dom.* 
 
 delete assignment2meeting.pdf
+delete assignment2meeting_FO
 
 % Add report container (required)
 rpt = Report('assignment2meeting','pdf');
