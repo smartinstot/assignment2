@@ -18,16 +18,47 @@ C.eps_0 = 8.854187817e-12;          % vacuum permittivity
 C.mu_0 = 1.2566370614e-6;           % vacuum permeability
 C.c = 299792458; % speed of light
 
-% Global constants
+%%%%% Part 1 - A %%%%%
+nx = 75;
+V0 = 1; 
+V = numeric1D(nx, V0, 0);
+f_p1a_numeric = figure();
+hold on;
+plot(V);
+ylabel('Voltage (V)');
+xlabel('x');
+xlim([0 nx]);
+
+%%%%% Part 1 - B %%%%%
 nx = 75;
 ny = 50;
 V0 = 1; 
+cMap = conductionMap(nx, ny, 1, 1E-2, 0, 0);
 
-V = numeric(nx, ny, ones(nx, ny), V0, V0, 0, 0);
+V_numeric = numeric(nx, ny, cMap, V0, V0, 0, 0);
+V_analytic = analytic(nx, ny, V0, 50);
 
-f = figure();
+% Numeric plot
+f_p1b_numeric = figure();
 hold on;
-surf(V,'EdgeColor','none','LineStyle','none','FaceLighting','phong');
-%plot(E_plot(:,n));
+surf(linspace(0,1.5,ny), linspace(0,1,nx), V_numeric,'EdgeColor','none','LineStyle','none');
+shading interp 
+xlabel('x');
+ylabel('y');
+zlabel('Voltage (V)');
+view([120 25]);
 
-%generateReport(f);
+% Analytic plot
+f_p1b_analytic = figure();
+hold on;
+surf(linspace(0,1.5,ny), linspace(0,1,nx), V_analytic,'EdgeColor','none','LineStyle','none');
+shading interp 
+xlabel('x');
+ylabel('y');
+zlabel('Voltage (V)');
+view([120 25]);
+
+generateReport(f_p1a_numeric, f_p1b_numeric, f_p1b_analytic);
+close(f_p1a_numeric);
+close(f_p1b_numeric);
+close(f_p1b_analytic);
