@@ -72,8 +72,47 @@ ylabel('y');
 zlabel('Conduction (Mho)');
 view([120 25]);
 
+V = numeric(nx, ny, cMap, Inf, Inf, 0, V0);
+
+% Numeric solution
+f_p2a_V = figure();
+hold on;
+surf(linspace(0,1.5,ny), linspace(0,1,nx), V,'EdgeColor','none','LineStyle','none');
+shading interp 
+xlabel('x');
+ylabel('y');
+zlabel('Voltage (V)');
+view([120 25]);
+
+% Find electric field
+[Ex, Ey] = gradient(V);
+Ex = -Ex;
+Ey = -Ey;
+f_p2a_E = figure();
+quiver(linspace(0,1.5,ny), linspace(0,1,nx), Ex, Ey);
+ylim([0 1]);
+xlim([0 1.5]);
+xlabel('x');
+ylabel('y');
+
+% Find current density
+Jx = cMap.*Ex;
+Jy = cMap.*Ey;
+J = sqrt(Jx.^2 + Jy.^2);
+f_p2a_J = figure();
+hold on;
+contourf(linspace(0,1.5,ny), linspace(0,1,nx), J,'EdgeColor','none','LineStyle','none');
+quiver(linspace(0,1.5,ny), linspace(0,1,nx), Jx, Jy);
+c = colorbar;
+c.Label.String = 'Current Density (Amps per Area)';
+xlabel('x');
+ylabel('y');
+
 %generateReport(f_p1a_numeric, f_p1b_numeric, f_p1b_analytic);
 close(f_p1a_numeric);
-%close(f_p1b_numeric);
+close(f_p1b_numeric);
 close(f_p1b_analytic);
 close(f_p2a_cMap);
+close(f_p2a_V);
+close(f_p2a_E);
+%close(f_p2a_J);
