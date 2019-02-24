@@ -58,7 +58,22 @@ ylabel('y');
 zlabel('Voltage (V)');
 view([120 25]);
 
-generateReport(f_p1a_numeric, f_p1b_numeric, f_p1b_analytic);
+%%%%% Part 2 - A %%%%%
+nx = 75;
+ny = 50;
+V0 = 1; 
+f_p2a_cMap = figure();
+hold on;
+cMap = conductionMap(nx, ny, 1, 1E-2, 20, 10);
+surf(linspace(0,1.5,ny), linspace(0,1,nx), cMap,'EdgeColor','none','LineStyle','none');
+shading interp 
+xlabel('x');
+ylabel('y');
+zlabel('Conduction (Mho)');
+view([120 25]);
+
+%generateReport(f_p1a_numeric, f_p1b_numeric, f_p1b_analytic);
 close(f_p1a_numeric);
-close(f_p1b_numeric);
+%close(f_p1b_numeric);
 close(f_p1b_analytic);
+close(f_p2a_cMap);
